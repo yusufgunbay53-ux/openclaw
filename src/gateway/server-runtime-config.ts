@@ -126,7 +126,17 @@ export async function resolveGatewayRuntimeConfig(params: {
     process.env.OPENCLAW_SKIP_CANVAS_HOST !== "1" && params.cfg.canvasHost?.enabled !== false;
 
   const trustedProxies = params.cfg.gateway?.trustedProxies ?? [];
-  const controlUiAllowedOrigins = (params.cfg.gateway?.controlUi?.allowedOrigins ?? [])
+  const envAllowedOriginsRaw = process.env.OPENCLAW_GATEWAY_CONTROL_UI_ALLOWED_ORIGINS;
+  const envAllowedOrigins = envAllowedOriginsRaw
+    ? envAllowedOriginsRaw.split(",").map((o) => o.trim()).filter(Boolean)
+    : [];
+  const renderOrigin = process.env.RENDER_EXTERNAL_URL?.trim();
+
+  const controlUiAllowedOrigins = [
+    ...(params.cfg.gateway?.controlUi?.allowedOrigins ?? []),
+    ...envAllowedOrigins,
+    ...(renderOrigin ? [renderOrigin] : []),
+  ]
     .map((value) => value.trim())
     .filter(Boolean);
   const dangerouslyAllowHostHeaderOriginFallback =

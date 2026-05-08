@@ -423,6 +423,7 @@ The Control UI is static files; the WebSocket target is configurable and can be 
     - Use `wss://` when the Gateway is behind TLS (Tailscale Serve, HTTPS proxy, etc.).
     - `gatewayUrl` is only accepted in a top-level window (not embedded) to prevent clickjacking.
     - Non-loopback Control UI deployments must set `gateway.controlUi.allowedOrigins` explicitly (full origins). This includes remote dev setups.
+    - Alternatively, set the `OPENCLAW_GATEWAY_CONTROL_UI_ALLOWED_ORIGINS` environment variable with comma-separated origins. On Render, the `RENDER_EXTERNAL_URL` is automatically included if present.
     - Gateway startup may seed local origins such as `http://localhost:<port>` and `http://127.0.0.1:<port>` from the effective runtime bind and port, but remote browser origins still need explicit entries.
     - Do not use `gateway.controlUi.allowedOrigins: ["*"]` except for tightly controlled local testing. It means allow any browser origin, not "match whatever host I am using."
     - `gateway.controlUi.dangerouslyAllowHostHeaderOriginFallback=true` enables Host-header origin fallback mode, but it is a dangerous security mode.
