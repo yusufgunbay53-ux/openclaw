@@ -199,6 +199,7 @@ Look for:
   <Accordion title="Connect / auth signatures">
     - `device identity required` → non-secure context or missing device auth.
     - `origin not allowed` → browser `Origin` is not in `gateway.controlUi.allowedOrigins` (or you are connecting from a non-loopback browser origin without an explicit allowlist).
+    - If you are running on Render, ensure `RENDER_EXTERNAL_URL` is set, or use the `OPENCLAW_GATEWAY_CONTROL_UI_ALLOWED_ORIGINS` environment variable to add your Render URL.
     - `device nonce required` / `device nonce mismatch` → client is not completing the challenge-based device auth flow (`connect.challenge` + `device.nonce`).
     - `device signature invalid` / `device signature expired` → client signed the wrong payload (or stale timestamp) for the current handshake.
     - `AUTH_TOKEN_MISMATCH` with `canRetryWithDeviceToken=true` → client can do one trusted retry with cached device token.
